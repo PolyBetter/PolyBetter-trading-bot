@@ -1,130 +1,121 @@
-# Polymarket Trading Tool v3.0
+# PolyBetter — Polymarket Trading Tool v3.0
 
-Полностью переработанный инструмент для торговли на Polymarket.
+Trading automation and sniper for [Polymarket](https://polymarket.com): limit orders, smart filters, multi-account support.
 
-## 🚀 Что нового в v3.0
+## What's in v3.0
 
-### ⚡ Производительность
-- **Async httpx** - параллельные запросы для быстрого сканирования
-- **Connection pooling** - переиспользование соединений
-- **Оптимизированный кэш** - меньше повторных запросов
+### Performance
+- **Async httpx** — parallel requests for fast market scanning
+- **Connection pooling** — connection reuse
+- **Optimized cache** — fewer duplicate API calls
 
-### 📊 Логирование
-- **Полные логи в файл** - ничего не обрезается
-- **JSON логи** - для парсинга и анализа
-- **Отдельный файл ошибок** - быстрый поиск проблем
-- **Чистый вывод в терминал** - только важное
+### Logging
+- **Full logs to file** — nothing truncated
+- **JSON logs** — for parsing and analysis
+- **Dedicated error log** — quick troubleshooting
+- **Clean console output** — only what matters
 
-### 📈 CSV Трекинг
-- **trade_history.csv** - все ордера с полными деталями
-- **positions_*.csv** - снимки позиций
-- **pnl_*.csv** - трекинг P&L
+### CSV tracking
+- **trades_*.csv** — all orders with full details
+- **positions_*.csv** — position snapshots
+- **pnl_*.csv** — P&L tracking
 
-### 🎯 Стратегии
-- **LimitSniper** - стандартный спам ордеров
-- **SmartSniper** - умная фильтрация с скорингом рынков
+### Strategies
+- **Limit Sniper** — high volume of small limit orders at min tick
+- **Smart Sniper** — scoring, liquidity and spread filters
 
-### 🤖 Telegram бот
-- **aiogram 3.x** - современный async фреймворк
-- **Мониторинг каждую минуту** (было 10 минут)
-- **Кнопка "Назад"** на каждом экране
-- **Инструменты** - анализ, статистика
+### Telegram bot
+- **aiogram 3.x** — async bot
+- **1-minute monitoring** (configurable)
+- **Back button** on every screen
+- **Tools** — analysis, stats, positions
 
-## 📁 Структура проекта
+## Project structure
 
 ```
-newpoly/
-├── main.py                 # Главный файл запуска
-├── config.json             # Конфигурация аккаунтов
-├── presets.json            # Пресеты стратегий
+PolyBetter/
+├── main.py                 # Entry point
+├── config_template.json    # Config template (copy to config.json)
+├── presets.json            # Strategy presets
 │
-├── core/                   # Ядро системы
-│   ├── config.py          # Загрузка конфигурации
-│   ├── logger.py          # Система логирования
-│   ├── client.py          # CLOB клиент
-│   └── data_api.py        # Data API клиент
+├── core/
+│   ├── config.py           # Config loading
+│   ├── logger.py           # Logging
+│   ├── client.py           # CLOB client
+│   └── data_api.py         # Data API client
 │
-├── strategies/             # Торговые стратегии
-│   ├── base.py            # Базовый класс
-│   ├── sniper.py          # Limit Sniper
-│   └── smart_sniper.py    # Smart Sniper
+├── strategies/
+│   ├── base.py             # Base strategy
+│   ├── sniper.py           # Limit Sniper
+│   └── smart_sniper.py     # Smart Sniper
 │
-├── trackers/              # Трекинг данных
-│   └── csv_tracker.py     # CSV логирование
+├── trackers/
+│   └── csv_tracker.py      # CSV tracking
 │
-├── bot/                   # Telegram бот
-│   └── telegram_bot_v2.py # Async бот на aiogram
+├── bot/
+│   └── telegram_bot_v2.py # Telegram bot (aiogram)
 │
-├── tools/                 # Вспомогательные инструменты
-│   ├── analyzer.py        # Анализ рынков
-│   └── simulator.py       # Симуляция стратегий
+├── tools/
+│   ├── analyzer.py         # Market analysis
+│   └── simulator.py        # Strategy simulation
 │
-├── logs/                  # Логи (создаётся автоматически)
-│   ├── polymarket.log     # Полный лог
-│   ├── polymarket.json.log # JSON лог
-│   └── polymarket_errors.log # Только ошибки
+├── logs/                   # Created at runtime
+│   ├── polymarket.log
+│   ├── polymarket.json.log
+│   └── polymarket_errors.log
 │
-└── data/                  # Данные (создаётся автоматически)
-    ├── trades_*.csv       # История ордеров
-    ├── positions_*.csv    # Снимки позиций
-    └── pnl_*.csv          # P&L трекинг
+└── data/                   # Created at runtime
+    ├── trades_*.csv
+    ├── positions_*.csv
+    └── pnl_*.csv
 ```
 
-## 🔧 Установка
+## Installation
 
 ```bash
-# Установить зависимости
-pip install -r requirements_v3.txt
-
-# Или для aiogram 3.x
-pip install aiogram>=3.4.0 httpx>=0.27.0
+pip install -r requirements.txt
 ```
 
-## 🎮 Использование
+## Usage
 
-### Интерактивное меню
+### Interactive menu
 ```bash
 python main.py
 ```
 
-### Прямой запуск
+### Direct run
 ```bash
-# Sniper
-python main.py sniper
-
-# Smart Sniper
-python main.py smart
-
-# Telegram бот
-python main.py bot
-
-# Анализ рынков
-python main.py analyze
-
-# Симуляция
-python main.py simulate
+python main.py sniper      # Limit Sniper
+python main.py smart       # Smart Sniper
+python main.py bot         # Telegram bot
+python main.py analyze     # Market analyzer
+python main.py simulate    # Strategy simulator
 ```
 
-## ⚙️ Конфигурация
+## Configuration
 
-### config.json
+1. Copy `config_template.json` to `config.json`.
+2. Fill in accounts (private key, API keys from [Polymarket CLOB](https://clob.polymarket.com)), proxy if needed, optional Telegram.
+
+**Important:** Never commit `config.json` (it is in `.gitignore`). Use `config_template.json` as reference.
+
+### config.json overview
 ```json
 {
-  "accounts": [
-    {
-      "name": "Account 1",
-      "enabled": true,
-      "private_key": "...",
-      "api_key": "...",
-      "api_secret": "...",
-      "api_passphrase": "...",
-      "proxy_wallet": "0x...",
-      "proxy": "http://user:pass@host:port"
-    }
-  ],
+  "accounts": [{
+    "name": "Account 1",
+    "enabled": true,
+    "private_key": "...",
+    "api_key": "...",
+    "api_secret": "...",
+    "api_passphrase": "...",
+    "proxy_wallet": "0x...",
+    "proxy": "http://user:pass@host:port"
+  }],
   "telegram": {
     "bot_token": "...",
     "chat_id": "...",
+    "allowed_user_id": 0,
     "min_profit_multiplier": 5,
     "monitor_interval_seconds": 60,
     "auto_close_enabled": true,
@@ -138,131 +129,40 @@ python main.py simulate
 }
 ```
 
-## 📋 Пресеты
+## Presets
 
-### aggressive (🔥 Агрессивный)
-- Максимум ордеров, низкие пороги
-- Ордер: $0.10
-- Мин. объём: $5k
+| Preset        | Description                    | Order size | Min volume |
+|---------------|--------------------------------|------------|------------|
+| aggressive    | Max orders, low thresholds     | $0.10      | $5k        |
+| medium        | Balance of quantity & quality  | $0.20      | $10k       |
+| conservative  | Quality only, high volume      | $0.50      | $50k       |
+| smart         | Scoring, liquidity, spread     | $0.30      | —          |
 
-### medium (⚖️ Сбалансированный)
-- Баланс между количеством и качеством
-- Ордер: $0.20
-- Мин. объём: $10k
-- Блокировка спорта
+Presets are defined in `presets.json`; you can add or edit them.
 
-### conservative (🎯 Консервативный)
-- Только качественные рынки
-- Ордер: $0.50
-- Мин. объём: $50k
-- Блокировка спорта и крипты
+## Logs
 
-### smart (🧠 Умный)
-- Скоринг рынков
-- Анализ ликвидности
-- Проверка спреда
-- Ордер: $0.30
+- `logs/polymarket.log` — full text log
+- `logs/polymarket.json.log` — JSON log
+- `logs/polymarket_errors.log` — errors only
 
-## 📊 Логи
+## CSV tracking
 
-### Файлы логов
-- `logs/polymarket.log` - полный текстовый лог
-- `logs/polymarket.json.log` - структурированный JSON
-- `logs/polymarket_errors.log` - только ошибки
+- **trades_YYYY-MM-DD.csv** — every order (timestamp, account, token, side, price, size, status, error)
+- **positions_*.csv** — position snapshots
+- **pnl_*.csv** — P&L over time
 
-### Формат JSON лога
-```json
-{
-  "timestamp": "2024-01-01T12:00:00",
-  "level": "INFO",
-  "logger": "polymarket",
-  "message": "Order placed: BUY 20.00 @ $0.0100",
-  "account": "Account 1",
-  "action": "ORDER_PLACED",
-  "details": {"token_id": "...", "side": "BUY"},
-  "duration_ms": 150
-}
-```
+## Telegram bot
 
-## 📈 CSV Трекинг
+Commands: `/start`, `/balance`, `/positions`, `/profit`, `/orders`.  
+Optional: restrict access with `allowed_user_id` in config.
 
-### trades_YYYY-MM-DD.csv
-Каждый ордер записывается с полными деталями:
-- timestamp, account, action
-- token_id, market_title, outcome
-- side, price, size, value
-- order_id, order_type, status
-- error (полный текст!), duration_ms
+## Security
 
-### Что отслеживается
-- ORDER_PLACED - ордер размещён
-- ORDER_FILLED - ордер исполнен
-- ORDER_FAILED - ошибка (с полным текстом!)
-- ORDER_CANCELLED - ордер отменён
+- Keep `config.json` local and out of version control.
+- Use proxies if you want to hide your IP.
+- API keys are from Polymarket; never share them.
 
-## 🤖 Telegram бот
-
-### Команды
-- `/start` - главное меню
-- `/balance` - балансы всех аккаунтов
-- `/positions` - все позиции
-- `/profit` - профитные позиции x5+
-- `/orders` - открытые ордера
-
-### Функции
-- Мониторинг каждые 60 секунд
-- Уведомления о профите
-- Авто-закрытие при PnL >= порога
-- Инструменты анализа
-
-## 🔍 Инструменты
-
-### Анализатор рынков
-```bash
-python main.py analyze
-# или
-python -m tools.analyzer
-```
-- Распределение по объёму
-- Анализ категорий
-- Покрытие пресетов
-- Поиск возможностей
-
-### Симулятор
-```bash
-python main.py simulate
-# или
-python -m tools.simulator
-```
-- Monte Carlo симуляция
-- Сравнение пресетов
-- Оценка рисков
-
-## 🔒 Безопасность
-
-- Приватные ключи хранятся в config.json (добавьте в .gitignore!)
-- Прокси поддерживаются для всех запросов
-- Проверка IP перед торговлей
-
-## 📝 Миграция с v2.0
-
-1. Скопируйте `config.json` и `presets.json`
-2. Установите новые зависимости: `pip install -r requirements_v3.txt`
-3. Запустите: `python main.py`
-
-Старые файлы (`polymarket_tool.py`, `telegram_bot.py`) можно удалить или оставить как бэкап.
-
-## 🐛 Отладка
-
-### Проблемы с прокси
-Проверьте логи в `logs/polymarket_errors.log`
-
-### Проблемы с ордерами
-Смотрите `data/trades_*.csv` - там полные тексты ошибок
-
-### Проблемы с ботом
-Убедитесь что `bot_token` и `chat_id` настроены в config.json
-
-## 📄 Лицензия
+## License
 
 MIT License
