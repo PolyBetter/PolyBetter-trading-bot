@@ -1,0 +1,13 @@
+This folder is ready to upload to GitHub.
+
+Included: all source code, config_template.json, presets.json, .gitignore, docs.
+Not included: config.json (secrets), logs/, data/, __pycache__/.
+
+To push:
+  1. cd for_github
+  2. git init
+  3. git add .
+  4. git commit -m "Initial commit"
+  5. Create repo on GitHub, then: git remote add origin <url> && git push -u origin main
+
+Users: copy config_template.json to config.json and add their keys locally.

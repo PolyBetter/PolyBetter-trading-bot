@@ -1,0 +1,114 @@
+{
+  "_comment_file": "Конфигурационный файл для Polymarket Trading Tool",
+  "_comment_usage": "Скопируйте этот файл в config.json и заполните своими данными",
+  
+  "accounts": [
+    {
+      "_comment": "=== АККАУНТ 1 ===",
+      
+      "name": "Account 1",
+      "_comment_name": "Любое название для идентификации аккаунта",
+      
+      "enabled": true,
+      "_comment_enabled": "true - аккаунт активен и будет использоваться | false - отключен",
+      
+      "private_key": "",
+      "_comment_private_key": "Private key вашего кошелька (без 0x). ВАЖНО: Храните в безопасности!",
+      "_how_to_get_private_key": "MetaMask -> Детали аккаунта -> Экспорт закрытого ключа",
+      
+      "api_key": "",
+      "_comment_api_key": "API ключ от Polymarket CLOB (формат: UUID)",
+      
+      "api_secret": "",
+      "_comment_api_secret": "API секрет от Polymarket CLOB (формат: base64 строка)",
+      
+      "api_passphrase": "",
+      "_comment_api_passphrase": "API passphrase от Polymarket CLOB",
+      "_how_to_get_api_keys": "1. Зайдите на https://clob.polymarket.com/auth/derive-api-key 2. Подключите MetaMask 3. Подпишите сообщение 4. Скопируйте все 3 ключа",
+      
+      "proxy_wallet": "",
+      "_comment_proxy_wallet": "Адрес proxy wallet (если используете). Оставьте пустым если не используете",
+      "_format": "0x...",
+      
+      "proxy": "",
+      "_comment_proxy": "HTTP/SOCKS5 прокси для этого аккаунта. Оставьте пустым для прямого подключения",
+      "_format_http": "http://username:password@ip:port",
+      "_format_socks5": "socks5://username:password@ip:port",
+      "_example": "http://user:pass@91.123.64.127:50100"
+    }
+  ],
+  
+  "_comment_accounts": "Можно добавить несколько аккаунтов - скопируйте блок {...} и добавьте через запятую",
+  
+  "telegram": {
+    "_comment": "=== TELEGRAM БОТ (опционально) ===",
+    
+    "bot_token": "",
+    "_comment_bot_token": "Токен бота от @BotFather. Оставьте пустым если не используете",
+    "_how_to_get": "1. Напишите @BotFather в Telegram 2. Отправьте /newbot 3. Следуйте инструкциям 4. Скопируйте токен",
+    
+    "chat_id": "",
+    "_comment_chat_id": "Ваш Telegram ID для получения уведомлений",
+    "_how_to_get_chat_id": "Напишите @userinfobot в Telegram и скопируйте ваш ID",
+    
+    "min_profit_multiplier": 5,
+    "_comment_min_profit_multiplier": "Минимальный множитель прибыли для отправки уведомлений (5 = 5x ROI)",
+    
+    "monitor_interval_seconds": 60,
+    "_comment_monitor_interval": "Интервал проверки позиций (в секундах). 60 = проверка каждую минуту",
+    
+    "auto_close_enabled": false,
+    "_comment_auto_close": "Автоматическое закрытие позиций при достижении прибыли (true/false)",
+    
+    "auto_close_pnl": 40.0,
+    "_comment_auto_close_pnl": "PnL $ for auto-close",
+    "allowed_user_id": 0,
+    "_comment_allowed_user_id": "0 = allow all; set to your Telegram user ID to restrict bot access"
+  },
+  "builder": {
+    "_comment": "Optional Builder API for order attribution. Leave empty to disable",
+    "key": "",
+    "secret": "",
+    "passphrase": ""
+  },
+  "settings": {
+    "_comment": "=== ОСНОВНЫЕ НАСТРОЙКИ ===",
+    
+    "parallel_requests": 50,
+    "_comment_parallel_requests": "Количество параллельных запросов к API. Больше = быстрее, но больше нагрузка",
+    
+    "request_timeout": 30,
+    "_comment_request_timeout": "Таймаут для HTTP запросов (в секундах)",
+    
+    "no_candidates_pause_minutes": 5,
+    "_comment_no_candidates_pause": "Сколько минут ждать если нет подходящих рынков",
+    
+    "cache_reset_minutes": 30,
+    "_comment_cache_reset": "Как часто сбрасывать кеш рынков (в минутах)",
+    
+    "check_sell_liquidity": true,
+    "_comment_check_sell_liquidity": "Проверять ликвидность для продажи перед размещением ордера (true/false)",
+    
+    "min_bid_size": 5.0,
+    "_comment_min_bid_size": "Минимальный размер bid в стакане для проверки ликвидности ($)",
+    
+    "min_bid_count": 1,
+    "_comment_min_bid_count": "Минимальное количество bid ордеров в стакане",
+    
+    "sell_order_type": "limit",
+    "_comment_sell_order_type": "Тип SELL ордера: 'limit' (лимитный) или 'market' (рыночный)",
+    
+    "log_level": "INFO",
+    "_comment_log_level": "Уровень логирования: DEBUG (подробно) | INFO (норма) | WARNING (только важное) | ERROR (только ошибки)",
+    
+    "log_max_size_mb": 50,
+    "_comment_log_max_size": "Максимальный размер лог-файла в мегабайтах. При превышении создается новый файл"
+  },
+  
+  "_final_notes": [
+    "После заполнения сохраните файл как config.json",
+    "Проверьте что все ключи корректны через меню: V) Проверка ВСЕХ аккаунтов",
+    "Для безопасности НЕ загружайте config.json в публичные репозитории!",
+    "Добавьте config.json в .gitignore"
+  ]
+}
